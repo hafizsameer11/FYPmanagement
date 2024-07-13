@@ -137,9 +137,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="HOFYPForm" autocomplete="off">
+                <form id="loginForm" method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <input type="hidden" name="type" value="hofyp">
                     <div class="input-group mb-3">
-                        <input type="email" id="USERNAME" name="USERNAME" class="form-control" placeholder="Enter User Name" required>
+                        <input type="email" name="email" id="USERNAME" class="form-control" placeholder="Enter User Name" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -147,7 +149,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="PASSWORD" id="PASSWORD" class="form-control" required placeholder="Password">
+                        <input type="password" name="password" id="PASSWORD" class="form-control" required placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -164,16 +166,13 @@
                         </div>
                         <div class="col-md-2"></div>
                         <div class="col-md-5">
-                            <button type="submit" class="btn btn-success btn-block" id="myButtonF">Sign In</button>
-                            <div id="loadingF" style="display:none;">
-                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
+                            <button type="submit" class="btn btn-success btn-block" id="myButtonT">Sign In</button>
+                            <div id="loadingT" style="display:none;">
                             </div>
                         </div>
                     </div>
                     <hr>
-                </form>
+                </form>rm>
             </div>
         </div>
     </div>
@@ -190,9 +189,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="CoordinatorForm" autocomplete="off">
+                <form id="loginForm" method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <input type="hidden" name="type" value="coordinator">
                     <div class="input-group mb-3">
-                        <input type="email" id="USERNAME" name="USERNAME" class="form-control" placeholder="Enter User Name" required>
+                        <input type="email" name="email" id="USERNAME" class="form-control" placeholder="Enter User Name" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -200,7 +201,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="PASSWORD" id="PASSWORD" class="form-control" required placeholder="Password">
+                        <input type="password" name="password" id="PASSWORD" class="form-control" required placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -217,11 +218,8 @@
                         </div>
                         <div class="col-md-2"></div>
                         <div class="col-md-5">
-                            <button type="submit" class="btn btn-success btn-block" id="myButtonC">Sign In</button>
-                            <div id="loadingC" style="display:none;">
-                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
+                            <button type="submit" class="btn btn-success btn-block" id="myButtonT">Sign In</button>
+                            <div id="loadingT" style="display:none;">
                             </div>
                         </div>
                     </div>
@@ -243,9 +241,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="SupervisorForm" autocomplete="off">
+                <form id="loginForm" method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <input type="hidden" name="type" value="supervisor">
                     <div class="input-group mb-3">
-                        <input type="email" id="USERNAME" name="USERNAME" class="form-control" placeholder="Enter User Name" required>
+                        <input type="email" name="email" id="USERNAME" class="form-control" placeholder="Enter User Name" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -253,7 +253,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="PASSWORD" id="PASSWORD" class="form-control" required placeholder="Password">
+                        <input type="password" name="password" id="PASSWORD" class="form-control" required placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -270,11 +270,8 @@
                         </div>
                         <div class="col-md-2"></div>
                         <div class="col-md-5">
-                            <button type="submit" class="btn btn-success btn-block" id="myButtonS">Sign In</button>
-                            <div id="loadingS" style="display:none;">
-                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
+                            <button type="submit" class="btn btn-success btn-block" id="myButtonT">Sign In</button>
+                            <div id="loadingT" style="display:none;">
                             </div>
                         </div>
                     </div>
@@ -296,9 +293,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="StudentForm" autocomplete="off">
+                <form id="loginForm" method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <input type="hidden" name="type" value="student">
                     <div class="input-group mb-3">
-                        <input type="email" id="USERNAME" name="USERNAME" class="form-control" placeholder="Enter User Name" required>
+                        <input type="email" name="email" id="USERNAME" class="form-control" placeholder="Enter User Name" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -306,7 +305,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="PASSWORD" id="PASSWORD" class="form-control" required placeholder="Password">
+                        <input type="password" name="password" id="PASSWORD" class="form-control" required placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -323,17 +322,13 @@
                         </div>
                         <div class="col-md-2"></div>
                         <div class="col-md-5">
-                            <button type="submit" class="btn btn-success btn-block" id="myButtonSt">Sign In</button>
-                            <div id="loadingSt" style="display:none;">
-                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
+                            <button type="submit" class="btn btn-success btn-block" id="myButtonT">Sign In</button>
+                            <div id="loadingT" style="display:none;">
                             </div>
                         </div>
                     </div>
                     <hr>
-                </form>
-            </div>
+                </form>            </div>
         </div>
     </div>
 </div>

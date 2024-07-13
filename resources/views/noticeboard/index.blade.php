@@ -1,100 +1,193 @@
 @extends('layouts.main')
 @section('main')
-<div class="main-content">
-    <section class="section">
-      <!-- Navbar -->
+    <div class="main-content">
+        <section class="section">
+            <div class="section-header">
+                <h1>Notifications</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active">
+                        <a href="/admin">Dashboard</a>
+                    </div>
+                    <div class="breadcrumb-item">Notifications</div>
+                </div>
+            </div>
 
-      <div class="container-fluid mt-4">
-        <!-- Dashboard Title -->
-        <div
-          class="section-header d-flex justify-content-between align-items-center"
-        >
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
-              <li class="breadcrumb-item">
-                <a href="/admin.html">Dashboard</a>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page">
-                List
-              </li>
-            </ol>
-          </nav>
-          <h1 class="mb-0">Page Title</h1>
+            <div class="section-body">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="text-right">
+                            <a href="{{ route('noticeboard.create') }}" class="btn btn-primary">Send notification</a>
+                        </div>
+                    </div>
+                    <section class="card">
+                        <div class="card-body">
+                            <form class="mb-0">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="input-label">Search</label>
+                                            <input type="text" class="form-control" name="search" value="" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="input-label">Type</label>
+                                            <select name="type" data-plugin-selectTwo class="form-control populate">
+                                                <option value="">All Types</option>
+
+                                                <option value="organizations">Head Of FYP</option>
+                                                <option value="students_and_instructors">
+                                                    Head Of Project & committee
+                                                </option>
+                                                <option value="students_and_instructors">
+                                                    Coordinator
+                                                </option>
+                                                <option value="instructors">Supervisor</option>
+                                                <option value="students">Students</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group mt-1">
+                                            <label class="input-label mb-4"> </label>
+                                            <input type="submit" class="text-center btn btn-primary w-100"
+                                                value="Show Results" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped font-14" id="datatable-basic">
+                                <tr>
+                                    <th class="text-left">Title</th>
+
+                                    <th class="text-center">Message</th>
+                                    <th class="text-center">Type</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Created Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                                @foreach ($notices as $notice)
+                                    <tr>
+                                        <td>{{ $notice->title }}</td>
+
+                                        <td class="text-center">
+                                            <button type="button" data-item-id="{{ $notice->id }}"
+                                                class="js-show-description btn btn-outline-primary" >
+                                                Show
+                                            </button>
+                                            <input type="hidden"
+                                                value="&lt;p&gt;&amp;nbsp;New financial document for course Meeting Reservation with type deduction with price ر.س 264&lt;/p&gt;" />
+                                        </td>
+                                        <td class="text-center">{{ $notice->type }}</td>
+                                        <td class="text-center">
+                                            <span class="text-danger">{{ $notice->staus }}</span>
+                                        </td>
+                                        <td class="text-center">{{ $notice->created_at }}</td>
+
+                                        <td width="100">
+                                            <a class="btn-transparent text-primary"
+                                                href="{{ route('noticeboard.destroy',['id'=>$notice->id]) }}">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-footer text-center">
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item disabled" aria-disabled="true" aria-label="&laquo; Previous">
+                                    <span class="page-link" aria-hidden="true">&lsaquo;</span>
+                                </li>
+
+                                <li class="page-item active" aria-current="page">
+                                    <span class="page-link">1</span>
+                                </li>
+                                <li class="page-item">
+                                    <a href="http:/127.0.0.1:8000/admin/notifications?page=2" class="page-link">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="http:/127.0.0.1:8000/admin/notifications?page=3" class="page-link">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="http:/127.0.0.1:8000/admin/notifications?page=4" class="page-link">4</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="http:/127.0.0.1:8000/admin/notifications?page=5" class="page-link">5</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="http:/127.0.0.1:8000/admin/notifications?page=6" class="page-link">6</a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="http:/127.0.0.1:8000/admin/notifications?page=7" class="page-link">7</a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a href="http:/127.0.0.1:8000/admin/notifications?page=2" class="page-link"
+                                        rel="next" aria-label="Next &raquo;">&rsaquo;</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="itemModalLabel">Item Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-
-        <div class="add-student-btn">
-          <a
-            class="btn btn-primary"
-            href="{{ route('student.create') }}"
-            >Add Student</a
-          >
+        <div class="modal-body">
+            <p id="itemDescription"></p>
         </div>
-        <!-- Dashboard Statistics -->
-
-        <!-- Search Bar -->
-        <div class="row search-bar mb-4">
-          <div class="col-md-5">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search"
-            />
-          </div>
-          <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="ID" />
-          </div>
-          <div class="col-md-2">
-            <button class="btn btn-primary btn-block">Find</button>
-          </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
+    </div>
+</div>
+</div>
 
-        <!-- Students Table -->
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead class="thead-light">
-              <tr>
-                <th>ID</th>
-                <th>No.</th>
-                <th>Student's Name</th>
-                <th>Supervisor</th>
-                <th>Department</th>
-                <th>Student Type</th>
-                <th>Project</th>
-                {{-- <th>Group No</th> --}}
-                <th>Reg Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-                @foreach ($students as  $student)
-                <tr>
-                    <td>{{ $student->id }}</td>
-                    <td>{{ $student->stid }}</td>
-             <td>{{ $student->user->name }}</td>
-                    {{-- <td>M Ahsan Nafees<br />nafeesahsan@gmail.com</td> --}}
-                    <td>{{ $student->supervisor->user->name }}</td>
-                    <td>{{ $student->department }}</td>
-                    <td>{{ $student->type }}</td>
-                    <td>{{ $student->project->name }}</td>
+@endsection
 
-                    <td>{{ $student->created_at }}</td>
-                    <td>
-                      <a href="#" class="btn btn-sm btn-primary"
-                        ><i class="fas fa-edit"></i
-                      ></a>
-                      <a href="{{ route('student.destroy',['id'=>$student->id]) }}" class="btn btn-sm btn-danger"
-                        ><i class="fas fa-trash"></i
-                      ></a>
-                    </td>
+@section('additional-scripts')
+<script>
+    $(document).ready(function() {
+        $('.js-show-description').click(function() {
+            var itemId = $(this).data('item-id');
 
-                @endforeach
+            // Assume AJAX call to fetch item description
+            $.ajax({
+                url: '/get-item-description/' + itemId,
+                type: 'GET',
+                success: function(response) {
+                    $('#itemDescription').text(response.description); // Assuming response contains description
+                    $('#itemModal').modal('show'); // Show modal
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    // Handle error scenario
+                }
+            });
+        });
+    });
+</script>
 
-
-              <!-- Repeat the above <tr> block for more students -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-  </div>
 @endsection

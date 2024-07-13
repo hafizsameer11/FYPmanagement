@@ -20,6 +20,7 @@
     </div>
 </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script src="{{ asset('assets/admin/vendor/jquery/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('assets/admin/vendor/popper/popper.min.js') }}"></script>
 <script src="{{ asset('assets/admin/vendor/bootstrap/bootstrap.min.js') }}"></script>
@@ -52,6 +53,33 @@
         window.adminPanelPrefix = "/admin";
     })(jQuery);
 </script>
+<script>
+    function showSweetAlert(type, title, message) {
+        Swal.fire({
+            icon: type,
+            title: title,
+            text: message,
+            timer: 5000,
+            showConfirmButton: true
+        });
+    }
+</script>
+@if (session('success'))
+    <script>
+        $(document).ready(function() {
+            showSweetAlert('success', 'Success', '{{ session('success') }}');
+        });
+    </script>
+@endif
+
+@if (session('error'))
+    <script>
+        $(document).ready(function() {
+            showSweetAlert('error', 'Error', '{{ session('error') }}');
+        });
+    </script>
+@endif
+
 <script>
     var deleteAlertTitle = "Are you sure?";
     var deleteAlertHint = "This action cannot be undone!";

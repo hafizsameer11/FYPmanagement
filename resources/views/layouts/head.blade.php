@@ -24,6 +24,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/admin/vendor/daterangepicker/daterangepicker.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/default/vendors/select2/select2.min.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <html lang="en">
 
     <style>

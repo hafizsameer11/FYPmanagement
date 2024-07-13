@@ -30,16 +30,19 @@
 
                     <div class="card-body">
                         <ul class="list-group" id="upcomingMeetings">
-                          @foreach ($meetings as $meeting )
-
-                          <li class="list-group-item">
-                            <strong>{{ $meeting->title }}</strong> with {{ $meeting->student->user->name }} on {{ $meeting->date }} at {{ $meeting->time }}
-                            <div class="action-buttons">
-                                <button class="btn btn-warning btn-sm" onclick="editMeeting({{ $meeting->id }}})">Edit</button>
-                                <button class="btn btn-danger btn-sm" ><a href="{{ rooute('meeting.destroy',['id'=>$meeting->id]) }}"> Delete </a></button>
-                            </div>
-                        </li>
-                          @endforeach
+                            @foreach ($meetings as $meeting)
+                                <li class="list-group-item">
+                                    <strong>{{ $meeting->title }}</strong> with {{ $meeting->student->user->name }} on
+                                    {{ $meeting->date }} at {{ $meeting->time }}
+                                    <div class="action-buttons">
+                                        <button class="btn btn-warning btn-sm" data-id="{{ $meeting->id }}"
+                                            id="edit">Edit</button>
+                                        <button class="btn btn-danger btn-sm"><a
+                                                href="{{ route('meeting.destroy', ['id' => $meeting->id]) }}"> Delete
+                                            </a></button>
+                                    </div>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -58,22 +61,31 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="assignMeetingForm">
+                                <form id="assignMeetingForm" action="{{ route('meeting.store') }}" method="POST">
+                                    @csrf
                                     <div class="form-group">
                                         <label for="meetingTitle">Meeting Title</label>
-                                        <input type="text" class="form-control" id="meetingTitle" required />
+                                        <input type="text" name="title" class="form-control" id="meetingTitle"
+                                            required />
                                     </div>
                                     <div class="form-group">
                                         <label for="meetingDate">Date</label>
-                                        <input type="date" class="form-control" id="meetingDate" required />
+                                        <input type="date" name="date" class="form-control" id="meetingDate"
+                                            required />
                                     </div>
                                     <div class="form-group">
                                         <label for="meetingTime">Time</label>
-                                        <input type="time" class="form-control" id="meetingTime" required />
+                                        <input type="time" name="time" class="form-control" id="meetingTime"
+                                            required />
                                     </div>
+
                                     <div class="form-group">
-                                        <label for="studentName">Student Name</label>
-                                        <input type="text" class="form-control" id="studentName" required />
+                                        <select name="student_id" class="custom-select" id="StudentType"
+                                            onchange="fillStudent()">
+                                            @foreach ($students as $supervisor)
+                                                <option value="{{ $supervisor->id }}">{{ $supervisor->user->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">
                                         Assign Meeting
@@ -98,27 +110,31 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="editMeetingForm">
+                                <form id="editMeetingForm" action=""  method="POST" >
+                                    @csrf
                                     <input type="hidden" id="editMeetingId" />
                                     <div class="form-group">
                                         <label for="editMeetingTitle">Meeting Title</label>
-                                        <input type="text" class="form-control" id="editMeetingTitle" required />
+                                        <input type="text" class="form-control" name="title" id="editMeetingTitle"
+                                            required />
                                     </div>
                                     <div class="form-group">
                                         <label for="editMeetingDate">Date</label>
-                                        <input type="date" class="form-control" id="editMeetingDate" required />
+                                        <input type="date" class="form-control" name="date" id="editMeetingDate"
+                                            required />
                                     </div>
                                     <div class="form-group">
                                         <label for="editMeetingTime">Time</label>
-                                        <input type="time" class="form-control" id="editMeetingTime" required />
+                                        <input type="time" class="form-control" name="time" id="editMeetingTime"
+                                            required />
                                     </div>
                                     <div class="form-group">
-                                        <label for="editStudentName">Student Name</label>
-                                        <input type="text" class="form-control" id="editStudentName" required />
+                                        <label for="editStudentId">Student</label>
+                                        <select name="student_id" class="custom-select" id="editStudentId" required>
+                                            <option value=""></option>
+                                        </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">
-                                        Save Changes
-                                    </button>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </form>
                             </div>
                         </div>
@@ -129,9 +145,46 @@
     </div>
 @endsection
 @section('additional-scripts')
-<script>
-     // Function to edit a meeting
-     window.editMeeting = function (id) {
-        };
-</script>
+    <script>
+        $(document).ready(function() {
+            $("#edit").on('click', function() {
+                console.log("edited")
+              let id=  $(this).data('id');
+                $.ajax({
+                    url: '/edit-meeting/' + id,
+                    type: 'GET',
+                    success: function(response) {
+                        const meeting = response.meeting;
+                        const students = response.student;
+
+                        // Fill the form with the meeting details
+                        $('#editMeetingId').val(meeting.id);
+                        $('#editMeetingTitle').val(meeting.title);
+                        $('#editMeetingDate').val(meeting.date);
+                        $('#editMeetingTime').val(meeting.time);
+
+                        // Populate the select element with students
+                        const studentSelect = $('#editStudentId');
+                        studentSelect.empty();
+                        students.forEach(student => {
+                            const option = new Option(student.user.name, student.id);
+                            studentSelect.append(option);
+                        });
+
+                        // Pre-select the current student
+                        studentSelect.val(meeting.student_id);
+                        $('#editMeetingForm').attr('action', '/update-meeting/' + meeting.id);
+
+                        // Show the modal
+                        $('#editMeetingModal').modal('show');
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while fetching the meeting details.');
+                    }
+                });
+            })
+        })
+
+        function editMeeting(id) {}
+    </script>
 @endsection
