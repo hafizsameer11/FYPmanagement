@@ -5,13 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Document extends Model
+class Task extends Model
 {
     use HasFactory;
-    public function supervisor(){
+    public function supervisor()
+    {
         return $this->belongsTo(Supervisor::class);
     }
-    public function student(){
+    public function student()
+    {
         return $this->belongsTo(Student::class);
-        }
+    }
 }

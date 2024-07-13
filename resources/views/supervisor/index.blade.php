@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('main')
+
 <div class="main-content">
     <section class="section">
       <!-- Navbar -->
@@ -25,8 +26,8 @@
         <div class="add-student-btn">
           <a
             class="btn btn-primary"
-            href="/admin pages/HOD/Student/New.html"
-            >Add Student</a
+            href="/admin pages/HOD/Supervisor/New.html"
+            >Super Visers</a
           >
         </div>
         <!-- Dashboard Statistics -->
@@ -57,12 +58,13 @@
                 <th>Password</th>
                 <th>No.</th>
                 <th>Student's Name</th>
-                <th>Supervisor</th>
-                <th>Department</th>
-                <th>Student Type</th>
+                <th>Supervisor Name</th>
+                <th>Supervisor ID</th>
+                <th>Supervisor Project</th>
+                <th>Assigned Student</th>
                 <th>Project</th>
-                <th>Group No</th>
                 <th>Reg Date</th>
+                <th>Expiration Area</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -73,51 +75,14 @@
                 <td>1.</td>
                 <td>M Ahsan Nafees<br />nafeesahsan@gmail.com</td>
                 <td>Zia-Ur-Rehman Zia</td>
-                <td>CS</td>
-                <td>New</td>
+                <td>12345</td>
                 <td>ISP E Supervision System</td>
-                <td>012</td>
-                <td>20/03/2024</td>
-                <td>
-                  <a href="#" class="btn btn-sm btn-primary"
-                    ><i class="fas fa-edit"></i
-                  ></a>
-                  <a href="#" class="btn btn-sm btn-danger"
-                    ><i class="fas fa-trash"></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>2728R2O</td>
-                <td>ST0D001</td>
-                <td>1.</td>
-                <td>M Ahsan Nafees<br />nafeesahsan@gmail.com</td>
-                <td>Zia-Ur-Rehman Zia</td>
-                <td>CS</td>
-                <td>New</td>
+                <td></td>
+                <!-- Leave blank if no assigned student -->
                 <td>ISP E Supervision System</td>
-                <td>012</td>
                 <td>20/03/2024</td>
-                <td>
-                  <a href="#" class="btn btn-sm btn-primary"
-                    ><i class="fas fa-edit"></i
-                  ></a>
-                  <a href="#" class="btn btn-sm btn-danger"
-                    ><i class="fas fa-trash"></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>2728R2O</td>
-                <td>ST0D001</td>
-                <td>1.</td>
-                <td>M Ahsan Nafees<br />nafeesahsan@gmail.com</td>
-                <td>Zia-Ur-Rehman Zia</td>
-                <td>CS</td>
-                <td>New</td>
-                <td>ISP E Supervision System</td>
-                <td>012</td>
-                <td>20/03/2024</td>
+                <td>Project End Date</td>
+                <!-- Adjust as needed -->
                 <td>
                   <a href="#" class="btn btn-sm btn-primary"
                     ><i class="fas fa-edit"></i

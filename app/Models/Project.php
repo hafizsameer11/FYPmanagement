@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
+    public function student(){
+        return $this->hasMany(Student::class);
+    }
+    public function supervisor(){
+        return $this->hasMany(Student::class);
+    }
+
 }

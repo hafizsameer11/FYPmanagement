@@ -71,12 +71,12 @@
             <li class="">
               <a
                 class="nav-link"
-                href="/admin pages/HOD/Student/list.html"
+                href="{{ route('student.index') }}"
                 >List</a
               >
             </li>
             <li class="">
-              <a class="nav-link" href="/admin pages/HOD/Student/New.html"
+              <a class="nav-link" href="{{ route('student.create') }}"
                 >New</a
               >
             </li>
@@ -85,7 +85,7 @@
 
         <li class="">
           <a
-            href="/admin pages/HOD/Projects/Projects.html"
+            href="{{ route('project.index') }}"
             class="nav-link"
           >
             <i class="fas fa-project-diagram"></i>
@@ -115,7 +115,7 @@
           <ul class="dropdown-menu">
             <li class="">
               <a
-                href="/admin pages/HOD/Supervisor/list.html"
+                href="{{ route('supervisor.index') }}"
                 class="nav-link"
                 >List</a
               >
@@ -123,7 +123,7 @@
             <li class="">
               <a
                 class="nav-link"
-                href="/admin pages/HOD/Supervisor/New.html"
+                href="{{ route('supervisor.create') }}"
                 >New</a
               >
             </li>
@@ -163,7 +163,7 @@
             <li class="">
               <a
                 class="nav-link"
-                href="/admin pages/DocManaged/StudentDoc/StudentDoc.html"
+                href="{{ route('document.create') }}"
                 >Student Documents</a
               >
             </li>

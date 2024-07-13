@@ -1,208 +1,109 @@
 @extends('layouts.main')
 @section('main')
+    <div class="main-content">
+        <section class="section">
+            <!-- Navbar -->
 
-<div class="main-content">
-    <section class="section">
-      <!-- Navbar -->
-      <div
-        class="section-header d-flex justify-content-between align-items-center"
-      >
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item">
-              <a href="/admin.html">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">
-              List
-            </li>
-          </ol>
-        </nav>
-        <h1 class="mb-0">Page Title</h1>
-      </div>
+            <div class="container-fluid mt-4">
+                <!-- Dashboard Title -->
+                <div class="section-header d-flex justify-content-between align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="/MainPages/HODadmin.html">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Main
+                            </li>
+                        </ol>
+                    </nav>
+                    <h1 class="mb-0">Main</h1>
+                </div>
 
-      <div class="container-fluid mt-4">
-        <h2 class="bg-primary text-white p-3 mb-4">
-          New Student Information Form
-        </h2>
-        <form>
-          <div class="form-group">
-            <label for="studentName">Student Name:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="studentName"
-              placeholder="Enter student name"
-            />
-          </div>
-          <div class="form-group">
-            <label for="studentID">Student ID:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="studentID"
-              placeholder="Enter student ID"
-            />
-          </div>
-          <div class="form-group">
-            <label for="studentProject">Student Project:</label>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                id="assignedStudent"
-                placeholder="Enter or select assigned student"
-              />
-              <div class="input-group-append">
-                <select
-                  class="custom-select"
-                  id="StudentType"
-                  onchange="fillStudent()"
-                >
-                  <option selected disabled>Select Project</option>
-                  <option value="ISP E supervisions">
-                    ISP E supervisions
-                  </option>
-                  <option value="ISP HRM">ISP HRM</option>
-                </select>
-              </div>
+                <div class="container mt-5">
+                    <div class="card">
+                        <div class="card-header">Project Details</div>
+                        <div class="card-body">
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addProjectModal">Add
+                                New Project</a>
+
+                            <div class="table-responsive mt-3">
+                                <table class="table table-bordered" id="projectTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Project Name</th>
+                                            <th>Project Status</th>
+                                            <th>Project Number</th>
+                                            <th>Project Added Year</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($projects as $project )
+                                        <tr>
+                                            <td>{{$project->name}}</td>
+                                            <td>{{$project->status}}</td>
+                                            <td>{{$project->pnumber}}</td>
+                                            <td>{{$project->year}}</td>
+                                            </tr>
+
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Project Modal -->
+                <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog"
+                    aria-labelledby="addProjectModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addProjectModalLabel">
+                                    Add New Project
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="addProjectForm" action="{{ route('project.store') }}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="projectNumber">Project Number</label>
+                                        <input type="text" class="form-control" id="projectNumber" name="pnumber"
+                                            required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="projectName">Project Name</label>
+                                        <input type="text" class="form-control" id="projectName" name="name"
+                                            required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="projectStatus">Project Status</label>
+                                        <select class="form-control" id="projectStatus" name="status" required>
+                                            <option value="New">New</option>
+                                            <option value="ongoing">Ongoing</option>
+                                            <option value="completed">Completed</option>
+                                            <option value="flopped">Flopped</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="projectAddedYear">Project Added Year</label>
+                                        <input type="number" class="form-control" id="projectAddedYear" name="year"
+                                            min="1900" max="2099" step="1" value="2024" required />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Add Project</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-          </div>
-          <div class="form-group">
-            <label for="assignedSupervisor">Assigned Supervisor:</label>
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                id="assignedSupervisor"
-                placeholder="Enter or select assigned supervisor"
-              />
-              <div class="input-group-append">
-                <select
-                  class="custom-select"
-                  id="SupervisorType"
-                  onchange="fillSupervisor()"
-                >
-                  <option selected disabled>Select supervisor</option>
-                  <option value="Zia-Ur-Rehman">Zia-Ur-Rehman</option>
-                  <option value="Zohair">Zohair</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="studentType">Student Type:</label>
-            <select class="form-control" id="studentType">
-              <option value="Undergraduate">New</option>
-              <option value="Graduate">Backlog</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="studentDepartment">Student Department:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="studentDepartment"
-              placeholder="Enter student department"
-            />
-          </div>
-          <div class="form-group">
-            <label for="password">Password:</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              placeholder="Enter password"
-            />
-          </div>
-          <div class="form-group">
-            <label for="confirmPassword">Confirm Password:</label>
-            <input
-              type="password"
-              class="form-control"
-              id="confirmPassword"
-              placeholder="Confirm password"
-            />
-          </div>
-
-          <!-- Group Assignment Section -->
-          <div class="form-group">
-            <label for="groupAssignment">Group Assignment:</label>
-            <div id="groupAssignmentSection">
-              <!-- This section will dynamically update based on selected project -->
-            </div>
-          </div>
-
-          <button type="submit" class="btn btn-primary">
-            Add Information
-          </button>
-        </form>
-      </div>
-      <script>
-        function fillSupervisor() {
-          var supervisorSelect =
-            document.getElementById("SupervisorType");
-          var selectedSupervisor =
-            supervisorSelect.options[supervisorSelect.selectedIndex].text;
-          document
-            .getElementById("assignedSupervisor")
-            .setAttribute("placeholder", selectedSupervisor);
-        }
-
-        function fillStudent() {
-          var studentSelect = document.getElementById("StudentType");
-          var selectedStudent =
-            studentSelect.options[studentSelect.selectedIndex].text;
-          document
-            .getElementById("assignedStudent")
-            .setAttribute("placeholder", selectedStudent);
-
-          // Assuming you want to dynamically generate group options based on selected project
-          var project = studentSelect.value;
-          var groupAssignmentSection = document.getElementById(
-            "groupAssignmentSection"
-          );
-
-          // Clear previous options
-          groupAssignmentSection.innerHTML = "";
-
-          if (project === "ISP E supervisions") {
-            // Example: Adding predefined groups for ISP E supervisions
-            var groups = ["Group N0 1", "Group N0 2", "Group N0 3"];
-            var groupSelect = document.createElement("select");
-            groupSelect.className = "custom-select";
-            groupSelect.innerHTML =
-              "<option selected disabled>Select Group</option>";
-
-            groups.forEach(function (group) {
-              var option = document.createElement("option");
-              option.value = group;
-              option.text = group;
-              groupSelect.appendChild(option);
-            });
-
-            groupAssignmentSection.appendChild(groupSelect);
-          } else if (project === "ISP HRM") {
-            // Example: Adding predefined groups for ISP HRM
-            var groups = ["Group X", "Group Y", "Group Z"];
-            var groupSelect = document.createElement("select");
-            groupSelect.className = "custom-select";
-            groupSelect.innerHTML =
-              "<option selected disabled>Select Group</option>";
-
-            groups.forEach(function (group) {
-              var option = document.createElement("option");
-              option.value = group;
-              option.text = group;
-              groupSelect.appendChild(option);
-            });
-
-            groupAssignmentSection.appendChild(groupSelect);
-          }
-          // Add logic for other projects or group creation as needed
-        }
-      </script>
-    </section>
-  </div>
-
- @endsection
+        </section>
+    </div>
+@endsection
