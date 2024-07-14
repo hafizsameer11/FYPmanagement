@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Meeting;
+use App\Models\Notice;
 use App\Models\Progress;
 use App\Models\Project;
 use App\Models\Student;
@@ -23,7 +24,8 @@ class DashboardController extends Controller
             $progress = Progress::where('student_id',$studdent_id)->with('student')->get();
             $meetings=Meeting::where('student_id',$studdent_id)->with('student','supervisor')->latest()->get();
             $tasks=Task::where('student_id',$student->id)->with('student','supervisor')->latest()->get();
-            return view('dashboard.student',compact('progress','meetings','tasks'));
+            $notices=Notice::where('type','student')->latest()->get();
+            return view('dashboard.student',compact('progress','meetings','tasks','notices'));
         }else if(Auth::user()->role=='supervisor'){
 
             return view('dashboard.supervisor');

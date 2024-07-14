@@ -135,14 +135,14 @@
                 </div>
                 <div class="card-body">
                   <ul class="list-group list-group-flush">
+                    @foreach ($notices as $notice )
                     <li class="list-group-item">
-                      Your meeting with the supervisor is scheduled for
-                      June 20, 2024.
+                     {{$notice->title}} <br>
+                     {{$notice->description}}
                     </li>
-                    <li class="list-group-item">
-                      Submit the first draft of your project by June 22,
-                      2024.
-                    </li>
+
+                    @endforeach
+                 
                   </ul>
                 </div>
               </div>

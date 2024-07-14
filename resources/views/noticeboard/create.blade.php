@@ -32,11 +32,11 @@
                                         <label class="input-label">Type</label>
                                         <select name="type" class="form-control populate" required>
                                             <option value="">Select Type</option>
-                                            <option value="Head Of FYP">Head Of FYP</option>
-                                            <option value="Head Of Project & committee">Head Of Project & committee</option>
-                                            <option value="Coordinator">Coordinator</option>
-                                            <option value="Supervisor">Supervisor</option>
-                                            <option value="Students">Students</option>
+                                            <option value="hofyp">Head Of FYP</option>
+                                            <option value="hop">Head Of Project & committee</option>
+                                            <option value="coodinator">Coordinator</option>
+                                            <option value="supervisor">Supervisor</option>
+                                            <option value="student">Students</option>
                                         </select>
                                         @error('type')
                                             <div class="text-danger">{{ $message }}</div>

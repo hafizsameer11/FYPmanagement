@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Notice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NoticeboardController extends Controller
 {
     public function index()
     {
-        $notices = Notice::with('user')->get();
-        return view('noticeboard.index', compact('notices'));
+        if(Auth::user()->role=='hod'){
+            $notices = Notice::with('user')->get();
+
+            return view('noticeboard.index', compact('notices'));
+        }else{
+            $notices = Notice::with('user')->where('type',Auth::user()->role)->get();
+
+            return view('noticeboard.student', compact('notices'));
+        }
     }
 
     public function create()

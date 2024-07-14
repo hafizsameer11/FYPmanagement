@@ -9,6 +9,7 @@ use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\NoticeboardController;
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\ScopeFinalizationController;
 use App\Http\Controllers\ScopeofProject;
 use App\Http\Controllers\StudentController;
@@ -108,6 +109,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/student-tasks',[TaskController::class,'studenttask'])->name('task.student');
 
     // scope of project routes
+
+    //routes for results
+    Route::get('/results', [ResultController::class, 'index'])->name('result.index');
+    Route::get('/create-result',[ResultController::class,'create'])->name('result.create');
+    Route::post('/store-result',[ResultController::class,'store'])->name('result.store');
+    Route::get('/edit-result/{id}',[ResultController::class,'edit'])->name('result.edit');
+    Route::post('/update-result{id}',[ResultController::class,'update'])->name('result.update');
+    Route::get('/delete-result/{id}',[ResultController::class,'destroy'])->name('result.destroy');
+    Route::get('/change-status-result/{id}',[ResultController::class,'publish'])->name('result.publish');
 
 
     Route::get('/set-session',[ScopeofProject::class,'sessioncreate'])->name('session.create');
