@@ -11,6 +11,10 @@ class Student extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    public function progresses()
+    {
+        return $this->hasMany(Progress::class, 'student_id');
+    }
     public function supervisor(){
         return $this->belongsTo(Supervisor::class);
     }
@@ -25,6 +29,9 @@ class Student extends Model
     }
     public function document(){
         return $this->hasMany(Meeting::class);
+    }
+    public function progress(){
+        return $this->hasMany(Progress::class);
     }
 
 }

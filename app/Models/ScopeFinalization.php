@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ScopeFinalization extends Model
 {
     use HasFactory;
+    protected $table = 'scope_finalizations';
 }

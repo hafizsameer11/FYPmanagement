@@ -4,9 +4,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompaintsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DynamicTableController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\NoticeboardController;
+use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ScopeFinalizationController;
+use App\Http\Controllers\ScopeofProject;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SuperviserController;
 use App\Http\Controllers\TaskController;
@@ -51,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/store-meeting', [MeetingController::class, 'store'])->name('meeting.store');
     Route::get('/edit-meeting/{id}', [MeetingController::class, 'edit'])->name('meeting.edit');
     Route::post('/update-meeting/{id}', [MeetingController::class, 'update'])->name('meeting.update');
+
+    Route::get('/student-meetings',[MeetingController::class,'studentmeetings'])->name('meeting.student');
     // routes for documents
     Route::get('/all-documents', [DocumentController::class, 'index'])->name('document.index');
     Route::get('/delete-document/{id}', [DocumentController::class, 'destroy'])->name('document.destroy');
@@ -92,9 +98,32 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks/delete/{id}', [TaskController::class, 'destroy'])->name('task.destroy');
     Route::get('/update-status/{id}/{status}', [TaskController::class, 'updatestatus'])->name('update_task_status');
     Route::get('/fetch-student-details/{id}', [TaskController::class, 'studentdetails'])->name('task.studentdetails');
+    //student task showing
+    Route::get('/student-tasks',[TaskController::class,'studenttask'])->name('task.student');
+
+    // scope of project routes
 
 
+    Route::get('/set-session',[ScopeofProject::class,'sessioncreate'])->name('session.create');
+    Route::get('/store-session',[ScopeofProject::class,'sessionstore'])->name('session.store');
+    // routes of project
+
+    Route::get('/crete-progress',[ProgressController::class,'create'])->name('progress.create');
+    Route::post('/store-progress',[ProgressController::class,'store'])->name('progress.store');
+    Route::get('/show-progress',[ProgressController::class,'showprog'])->name('progress.show');
+    Route::post('/show-progress',[ProgressController::class,'show'])->name('progress.show.single');
+
+    //scope finalization routes
+    Route::get('/scope-finalization-form',[ScopeFinalizationController::class,'index'])->name('scope.index');
+    Route::post('/scope/store', [ScopeFinalizationController::class, 'store'])->name('scope.store');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('dynamic-tables', DynamicTableController::class);
+    Route::post('/dynamic-tables/{id}/records', [DynamicTableController::class, 'updateRecord']);
+    Route::get('/dynamic-publish/{id}', [DynamicTableController::class, 'publish']);
+
+    Route::get('/dynamic-table-exam', [DynamicTableController::class, 'showform'])->name('showform');
+    Route::get('/dynamic-table-exam-st', [DynamicTableController::class, 'stshowform'])->name('stshowform');
     // Add more routes as needed
 });

@@ -75,4 +75,12 @@ class MeetingController extends Controller
             return redirect()->route('meeting.index')->with('error', 'Meeting Not Found');
         }
     }
+
+    //student showing
+    public function studentmeetings(){
+        $studentid=Student::where('user_id',Auth::user()->id)->first();
+        $studentid=$studentid->id;
+        $meetings=Meeting::where('student_id',$studentid)->with('student','supervisor')->latest()->get();
+        return view('meeting.student',compact('meetings'));
+    }
 }

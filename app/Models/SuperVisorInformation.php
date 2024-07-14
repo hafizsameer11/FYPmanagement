@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class SuperVisorInformation extends Model
 {
     use HasFactory;
+    protected $table = 'super_visor_informations';
 }

@@ -111,4 +111,14 @@ class TaskController extends Controller
         $student = Student::with('user', 'project')->where('id', $id)->first();
         return response()->json(['student' => $student]);
     }
+    public function studenttask(){
+        $student=Student::where('user_id',Auth::user()->id)->first();
+        $tasks=Task::where('student_id',$student->id)->with('student','supervisor')->latest()->get();
+        $totaltask=Task::where('student_id',$student->id)->count();
+        $Pending=Task::where('student_id',$student->id)->where('status','Pending')->count();
+        $failed=Task::where('student_id',$student->id)->where('status','failed')->count();
+        $passed=Task::where('student_id',$student->id)->where('status','passed')->count();
+
+        return view('task.student',compact('tasks','Pending','failed','passed','totaltask'));
+    }
 }
