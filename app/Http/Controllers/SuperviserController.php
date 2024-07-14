@@ -12,9 +12,26 @@ class SuperviserController extends Controller
 {
     public function index()
     {
-        $supervisors = Supervisor::all();
+        $supervisors = Supervisor::with('user','student')->get();
 
         return view('supervisor.index', compact('supervisors'));
+    }
+    public function search(Request $request)  {
+        $query = Supervisor::query();
+
+        if ($request->filled('name')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->name . '%');
+            });
+        }
+
+        if ($request->filled('spid')) {
+            $query->where('spid', 'like', '%' . $request->spid . '%');
+        }
+
+        $supervisors = $query->with('user', 'supervisor.user', 'project')->get();
+        return view('supervisor.index', compact('supervisors'));
+
     }
 
     public function create()

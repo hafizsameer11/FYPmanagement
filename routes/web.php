@@ -14,6 +14,7 @@ use App\Http\Controllers\ScopeofProject;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SuperviserController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/delete-student/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
     Route::get('/create-student', [StudentController::class, 'create'])->name('student.create');
     Route::post('/store-student', [StudentController::class, 'store'])->name('student.store');
+    Route::get('/edit-student/{id}', [StudentController::class, 'edit'])->name('student.edit');
+    Route::post('/update-student/{id}', [StudentController::class, 'update'])->name('student.update');
+
     //students to  a supervisor
     Route::get('/supervisor-student', [StudentController::class, 'supervisorstudent'])->name('student.supervisor');    //project routes
     Route::get('/all-project', [ProjectController::class, 'index'])->name('project.index');
@@ -48,6 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/delete-supervisor/{id}', [SuperviserController::class, 'destroy'])->name('supervisor.destroy');
     Route::get('/create-supervisor', [SuperviserController::class, 'create'])->name('supervisor.create');
     Route::post('/store-supervisor', [SuperviserController::class, 'store'])->name('supervisor.store');
+    Route::get('/searc-supervisor', [SuperviserController::class, 'search'])->name('supervisor.search');
     //routes for meeting
     Route::get('/all-meetings', [MeetingController::class, 'index'])->name('meeting.index');
     Route::get('/delete-meeting/{id}', [MeetingController::class, 'destroy'])->name('meeting.destroy');
@@ -59,6 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/student-meetings',[MeetingController::class,'studentmeetings'])->name('meeting.student');
     // routes for documents
     Route::get('/all-documents', [DocumentController::class, 'index'])->name('document.index');
+    Route::get('/search-documents', [DocumentController::class, 'search'])->name('document.search');
     Route::get('/delete-document/{id}', [DocumentController::class, 'destroy'])->name('document.destroy');
     Route::get('/create-document', [DocumentController::class, 'create'])->name('document.create');
     Route::post('/store-document', [DocumentController::class, 'store'])->name('document.store');
@@ -115,7 +121,11 @@ Route::middleware('auth')->group(function () {
 
     //scope finalization routes
     Route::get('/scope-finalization-form',[ScopeFinalizationController::class,'index'])->name('scope.index');
+    Route::get('/scope-finalization-student',[ScopeFinalizationController::class,'studentview'])->name('scope.student');
     Route::post('/scope/store', [ScopeFinalizationController::class, 'store'])->name('scope.store');
+    Route::get('/appoval-form',[ScopeFinalizationController::class,'approvalform'])->name('scope.form');
+    Route::post('/appoval-form-submit',[ScopeFinalizationController::class,'submitform'])->name('scope.form.submit');
+    Route::post('/appoval-form-store',[ScopeFinalizationController::class,'storeform'])->name('scope.form.store');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -125,5 +135,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dynamic-table-exam', [DynamicTableController::class, 'showform'])->name('showform');
     Route::get('/dynamic-table-exam-st', [DynamicTableController::class, 'stshowform'])->name('stshowform');
+
+
+    //user routes
+
+    Route::get('/all-users',[UserController::class,'index'])->name('user.index');
+    Route::get('/create-users',[UserController::class,'create'])->name('user.create');
+    Route::post('/store-users',[UserController::class,'store'])->name('user.store');
+    Route::get('/edit-user/{id}',[UserController::class,'edit'])->name('user.edit');
+    Route::post('/update-user{id}',[UserController::class,'update'])->name('user.update');
+    Route::get('/delete-user/{id}',[UserController::class,'destroy'])->name('user.destroy');
     // Add more routes as needed
 });

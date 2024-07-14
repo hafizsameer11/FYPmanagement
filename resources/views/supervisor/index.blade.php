@@ -1,102 +1,96 @@
 @extends('layouts.main')
 @section('main')
+    <div class="main-content">
+        <section class="section">
+            <!-- Navbar -->
 
-<div class="main-content">
-    <section class="section">
-      <!-- Navbar -->
+            <div class="container-fluid mt-4">
+                <!-- Dashboard Title -->
+                <div class="section-header d-flex justify-content-between align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="/admin.html">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                List
+                            </li>
+                        </ol>
+                    </nav>
+                    <h1 class="mb-0">Page Title</h1>
+                </div>
 
-      <div class="container-fluid mt-4">
-        <!-- Dashboard Title -->
-        <div
-          class="section-header d-flex justify-content-between align-items-center"
-        >
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
-              <li class="breadcrumb-item">
-                <a href="/admin.html">Dashboard</a>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page">
-                List
-              </li>
-            </ol>
-          </nav>
-          <h1 class="mb-0">Page Title</h1>
-        </div>
+                <div class="add-student-btn">
+                    <a class="btn btn-primary" href="{{ route('supervisor.create') }}">Add Super Visers</a>
+                </div>
+                <!-- Dashboard Statistics -->
 
-        <div class="add-student-btn">
-          <a
-            class="btn btn-primary"
-            href="/admin pages/HOD/Supervisor/New.html"
-            >Super Visers</a
-          >
-        </div>
-        <!-- Dashboard Statistics -->
+                <!-- Search Bar -->
+                <div class="row search-bar mb-4">
+                    <form action="{{ route('supervisor.search') }}" method="GET" class="w-100">
+                        <div class="row">
 
-        <!-- Search Bar -->
-        <div class="row search-bar mb-4">
-          <div class="col-md-5">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search"
-            />
-          </div>
-          <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="ID" />
-          </div>
-          <div class="col-md-2">
-            <button class="btn btn-primary btn-block">Find</button>
-          </div>
-        </div>
+                            <div class="col-md-5">
+                                <input type="text" name="name" class="form-control" placeholder="Search by Name" value="{{ request('name') }}" />
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" name="spid" class="form-control" placeholder="Search by ID" value="{{ request('spid') }}" />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary btn-block">Find</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-        <!-- Students Table -->
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <thead class="thead-light">
-              <tr>
-                <th>ID</th>
-                <th>Password</th>
-                <th>No.</th>
-                <th>Student's Name</th>
-                <th>Supervisor Name</th>
-                <th>Supervisor ID</th>
-                <th>Supervisor Project</th>
-                <th>Assigned Student</th>
-                <th>Project</th>
-                <th>Reg Date</th>
-                <th>Expiration Area</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>2728R2O</td>
-                <td>ST0D001</td>
-                <td>1.</td>
-                <td>M Ahsan Nafees<br />nafeesahsan@gmail.com</td>
-                <td>Zia-Ur-Rehman Zia</td>
-                <td>12345</td>
-                <td>ISP E Supervision System</td>
-                <td></td>
-                <!-- Leave blank if no assigned student -->
-                <td>ISP E Supervision System</td>
-                <td>20/03/2024</td>
-                <td>Project End Date</td>
-                <!-- Adjust as needed -->
-                <td>
-                  <a href="#" class="btn btn-sm btn-primary"
-                    ><i class="fas fa-edit"></i
-                  ></a>
-                  <a href="#" class="btn btn-sm btn-danger"
-                    ><i class="fas fa-trash"></i
-                  ></a>
-                </td>
-              </tr>
-              <!-- Repeat the above <tr> block for more students -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-  </div>
+                <!-- Students Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>ID</th>
+
+
+                                <th>Student's Name</th>
+                                <th>Supervisor Name</th>
+                                <th>Supervisor ID</th>
+                                <th>Supervisor Project</th>
+                                <th>Expiration Area</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($supervisors as $supervisor)
+                                <tr>
+
+
+                                    <td>{{ $supervisor->id }}</td>
+
+                                    <td>
+                                        @foreach ($supervisor->student as $student)
+                                            <li>{{ $student->user->name }}</li>
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $supervisor->user->name }}</td>
+                                    <td>{{ $supervisor->spid }}</td>
+                                    <td>
+                                        @foreach ($supervisor->student as $student)
+                                            <li>{{ $student->project->name }}</li>
+                                        @endforeach
+                                    </td>
+
+                                    <!-- Leave blank if no assigned student -->
+
+                                    <td>{{ $supervisor->expertarea }}</td>
+                                    <!-- Adjust as needed -->
+
+                                </tr>
+                            @endforeach
+                            <!-- Repeat the above <tr> block for more students -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
 @endsection

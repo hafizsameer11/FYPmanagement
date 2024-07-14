@@ -21,4 +21,13 @@ class Supervisor extends Model
     public function document(){
         return $this->hasMany(Meeting::class);
     }
+    public function supervisor(){
+        return $this->hasMany(Student::class);
+    }
+    // public function project(){
+    //     return $this->hasMany(Project::class);
+    // }
+    public function student(){
+        return $this->hasMany(Student::class);
+    }
 }

@@ -77,7 +77,7 @@
                       <i class="far fa-bell"></i>
                     </a>
 
-                    <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                    {{-- <div class="dropdown-menu dropdown-list dropdown-menu-right">
                       <div class="dropdown-header">
                         Notifications
                         <div class="float-right">
@@ -159,7 +159,7 @@
                           >View All <i class="fas fa-chevron-right"></i
                         ></a>
                       </div>
-                    </div>
+                    </div> --}}
                   </li>
 
                   <li class="dropdown">
@@ -170,26 +170,16 @@
                     >
                       <img
                         alt="image"
-                        src="/Screenshot 2024-06-03 090851.png"
+                        src="{{ asset('assets/favicon.ico') }}"
                         class="rounded-circle mr-1"
                       />
-                      <div class="d-sm-none d-lg-inline-block">Ahsan Nafees</div>
+                      <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                      <a
-                        href="/MainPages/HODadmin.html"
-                        class="dropdown-item has-icon"
-                      >
-                        <i class="fas fa-globe"></i> Show Website
-                      </a>
-
-                      <a href="admin/users/1/edit" class="dropdown-item has-icon">
-                        <i class="fas fa-cog"></i> Change Password
-                      </a>
 
                       <div class="dropdown-divider"></div>
                       <a
-                        href="/admin pages/logoutpages/Logout.html"
+                        href="{{ route('logout') }}"
                         class="dropdown-item has-icon text-danger"
                       >
                         <i class="fas fa-sign-out-alt"></i> Logout

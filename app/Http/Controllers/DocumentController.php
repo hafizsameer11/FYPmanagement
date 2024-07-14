@@ -12,9 +12,9 @@ class DocumentController extends Controller
 {
     public function index()
     {
-        $documents = Document::with('student','supervisor')->latest()->get();
-        $students=Student::all();
-        return view('document.index', compact('documents','students'));
+        $documents = Document::with('student', 'supervisor')->latest()->get();
+        $students = Student::all();
+        return view('document.index', compact('documents', 'students'));
     }
     public function view($id)
     {
@@ -36,7 +36,31 @@ class DocumentController extends Controller
         $students = Student::with('user')->get(); // Fetch all students
         return view('document.create', compact('students'));
     }
+    public function search(Request $request)
+    {
+        $query = Document::query();
 
+        if ($request->filled('name')) {
+            $query->whereHas('student.user', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->name . '%');
+            });
+        }
+
+        if ($request->filled('spid')) {
+            $query->whereHas('student', function ($q) use ($request) {
+                $q->where('stid', 'like', '%' . $request->spid . '%');
+            });
+        }
+
+        if ($request->filled('document_type')) {
+            $query->where('document_type', $request->document_type);
+        }
+
+        $documents = $query->with('student.user', 'supervisor.user')->latest()->get();
+        $students = Student::all();
+
+        return view('document.index', compact('documents', 'students'));
+    }
     public function store(Request $request)
 
     {
@@ -50,7 +74,7 @@ class DocumentController extends Controller
         $document = new Document();
 
 
-        $document->user_id=Auth::user()->id;
+        $document->user_id = Auth::user()->id;
         $document->student_id = $request->student_id; // Assign student_id instead of project_id
         $document->document_type = $request->document_type;
 
@@ -88,7 +112,7 @@ class DocumentController extends Controller
 
         $document = Document::find($id);
         $document->student_id = $request->student_id;
-        $document->status="pending";
+        $document->status = "pending";
         $document->document_type = $request->document_type;
 
         if ($request->hasFile('file')) {

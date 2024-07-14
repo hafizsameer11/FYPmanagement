@@ -22,27 +22,34 @@
                 <div class="container-fluid my-5 STDDOCsrch">
                     <!-- Search Bar -->
                     <div class="row search-bar mb-4">
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="Search" />
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" placeholder="ID" />
-                        </div>
-                        <div class="col-md-2">
-                            <select class="form-control">
-                                <option disabled selected>Select Type</option>
-                                <option value="type1">Type 1</option>
-                                <option value="type2">Type 2</option>
-                                <option value="type3">Type 3</option>
-                                <!-- Add more options as needed -->
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            <button class="btn btn-primary">Find</button>
-                        </div>
-                        <div class="col-md-1">
-                            <button class="btn btn-primary">Upload</button>
-                        </div>
+                        <form action="{{ route('document.search') }}" method="GET" class="w-100">
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <input type="text" name="name" class="form-control" placeholder="Search by Name"
+                                        value="{{ request('name') }}" />
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" name="spid" class="form-control" placeholder="Search by ID"
+                                        value="{{ request('spid') }}" />
+                                </div>
+                                <div class="col-md-2">
+                                    <select name="document_type" class="form-control">
+                                        <option disabled selected>Select Type</option>
+                                        <option value="Thesis">Thesis</option>
+                                        <option value="Document">Document</option>
+                                        <option value="SRS">SRS</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="submit" class="btn btn-primary">Find</button>
+                                </div>
+                                <div class="col-md-1">
+                                    <a href="{{ route('document.create') }}" class="btn btn-primary">Upload</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <!-- Main Section - Document List -->
                     <div class="table-responsive">
@@ -67,18 +74,21 @@
                                         <td>{{ $doc->student->stid }}</td>
                                         <td>{{ $doc->student->user->name }}</td>
                                         <td>{{ $doc->student->supervisor->user->name }}</td>
-                                        <td>{{ $doc->student->department}}</td>
-                                        <td>{{ $doc->document_type}}</td>
-                                        <td>{{ $doc->student->project->name}}</td>
-                                        <td>{{ $doc->status}}</td>
+                                        <td>{{ $doc->student->department }}</td>
+                                        <td>{{ $doc->document_type }}</td>
+                                        <td>{{ $doc->student->project->name }}</td>
+                                        <td>{{ $doc->status }}</td>
 
                                         <td>
                                             <div class="btn-group btn-group-sm">
-                                                <a href="uploads/documents/{{ $doc->file }}" class="btn btn-info" target="_blank"><i class="fas fa-eye"></i> View</a>
+                                                <a href="uploads/documents/{{ $doc->file }}" class="btn btn-info"
+                                                    target="_blank"><i class="fas fa-eye"></i> View</a>
                                                 {{-- <a href="#" class="btn btn-secondary"><i class="fas fa-comment"></i>
                                                     Comment</a> --}}
-                                                    <a href="{{ route('document.approve', ['id' => $doc->id]) }}" class="btn btn-success"><i class="fas fa-check"></i> Approve</a>
-                                                    <a href="{{ route('document.unapprove', ['id' => $doc->id]) }}" class="btn btn-warning"><i class="fas fa-times"></i> Unapprove</a>
+                                                <a href="{{ route('document.approve', ['id' => $doc->id]) }}"
+                                                    class="btn btn-success"><i class="fas fa-check"></i> Approve</a>
+                                                <a href="{{ route('document.unapprove', ['id' => $doc->id]) }}"
+                                                    class="btn btn-warning"><i class="fas fa-times"></i> Unapprove</a>
                                             </div>
                                         </td>
                                     </tr>

@@ -2,7 +2,7 @@
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
             <a href="">
-                <img src="/favicon.ico" alt="Icon" style="width: 30px; height: 30px; vertical-align: middle" />
+                <img src="{{ asset('assets/favicon.ico') }}" alt="Icon" style="width: 30px; height: 30px; vertical-align: middle" />
                 <span
                     style="
               font-size: 14px;
@@ -16,7 +16,7 @@
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="">
-                <img src="/favicon.ico" alt="Icon" style="width: 30px; height: 30px; vertical-align: middle" />
+                <img src="{{ asset('assets/favicon.ico') }}" alt="Icon" style="width: 30px; height: 30px; vertical-align: middle" />
                 <!-- <span style="font-size: 12px; font-weight: bold; vertical-align: middle;">
                           ISP E S
                       </span> -->
@@ -24,7 +24,7 @@
         </div>
 
         <div class="user-profile" style="text-align: center; margin: 20px 0">
-            <img src="/Screenshot 2024-06-03 090851.png" alt="User Picture"
+            <img src="{{ asset('assets/favicon.ico') }}" alt="User Picture"
                 style="width: 60px; height: 60px; border-radius: 50%" />
             <div style="margin-top: 10px">
                 <span style="display: block; font-size: 14px; font-weight: bold">{{ Auth::user()->name }}s</span>
@@ -33,14 +33,14 @@
         </div>
         <ul class="sidebar-menu">
             <li class="">
-                <a href="/MainPages/HODadmin.html" class="nav-link">
+                <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
             <li class="menu-header">Education</li>
-            @if (Auth::user()->role == 'hod' || Auth::user()->role == 'hofyp' || Auth::user()->role == 'coordi')
+            @if (Auth::user()->role == 'hod' || Auth::user()->role == 'hofyp' || Auth::user()->role == 'coordinator')
                 <li class="nav-item dropdown">
                     <a href="/admin pages/HOD/Student/list.html" class="nav-link has-dropdown" data-toggle="dropdown">
                         <i class="fas fa-user-graduate"></i>
@@ -62,8 +62,8 @@
                     </a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a href="" class="nav-link has-dropdown">
+                <li class="">
+                    <a href="{{ route('scope.form') }}" class="nav-link ">
                         <i class="fas fa-project-diagram"></i>
                         <span>Scope of Project</span>
                     </a>
@@ -104,10 +104,10 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li class="">
-                            <a class="nav-link" href="{{ route('document.create') }}">Student Documents</a>
+                            <a class="nav-link" href="{{ route('document.create') }}">Upload Documents</a>
                         </li>
                         <li class="">
-                            <a class="nav-link" href="/admin pages/DocManaged/StudentDoc/SupervisorDoc.html">Supervisor
+                            <a class="nav-link" href="{{ route('document.index')}}">Supervisor
                                 Documents</a>
                         </li>
                     </ul>
@@ -130,21 +130,9 @@
                         <span>Users</span>
                     </a>
                     <ul class="dropdown-menu">
+
                         <li class="">
-                            <a class="nav-link" href="/admin pages/HOD/users/Head of Project&searchCommtie.html">Head Of
-                                project</a>
-                        </li>
-                        <li class="">
-                            <a class="nav-link" href="/admin pages/HOD/users/Head Of FYP.html">Head of FYP</a>
-                        </li>
-                        <li class="">
-                            <a class="nav-link" href="/admin pages/HOD/users/Cordintor.html">Coordinator</a>
-                        </li>
-                        <li class="">
-                            <a class="nav-link" href="/admin pages/HOD/users/staffs.html">Staff</a>
-                        </li>
-                        <li class="">
-                            <a class="nav-link" href="/admin pages/HOD/users/create.html">New</a>
+                            <a class="nav-link" href="{{ route('user.create') }}">New</a>
                         </li>
                     </ul>
                 </li>
@@ -254,12 +242,22 @@
                     <span>Results</span>
                 </a>
             </li>
-            <li class="">
-                <a href="{{ route('scope.index') }}" class="nav-link">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>Scope Finalization</span>
-                </a>
-            </li>
+             <li class="nav-item dropdown">
+                    <a href="#" class="nav-link has-dropdown"
+                        data-toggle="dropdown">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Scope Finalization</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="">
+                            <a class="nav-link" href="{{ route('scope.index') }}">Scope Finalization Form</a>
+                        </li>
+                        <li class="">
+                            <a class="nav-link" href="{{ route('scope.student') }}">Status</a>
+                        </li>
+                    </ul>
+                </li>
+
 
 
             @endif

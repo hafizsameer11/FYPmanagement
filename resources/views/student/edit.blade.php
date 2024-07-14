@@ -26,7 +26,7 @@
                     <input type="hidden" name="role" value="student">
                     <div class="form-group">
                         <label for="studentName">Student Name:</label>
-                        <input type="text" name="name" class="form-control" id="studentName" placeholder="Enter student name" value="{{ isset($student) ? $student->name : old('name') }}" />
+                        <input type="text" name="name" class="form-control" id="studentName" placeholder="Enter student name" value="{{ isset($student) ? $student->user->name : old('name') }}" />
                     </div>
                     <div class="form-group">
                         <label for="studentID">Student ID:</label>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label for="studentEmail">Student Email:</label>
-                        <input type="text" name="email" class="form-control" id="studentEmail" placeholder="Enter student email" value="{{ isset($student) ? $student->email : old('email') }}" />
+                        <input type="text" name="email" class="form-control" id="studentEmail" placeholder="Enter student email" value="{{ isset($student) ? $student->user->email : old('email') }}" />
                     </div>
                     <div class="form-group">
                         <label for="studentProject">Student Project:</label>

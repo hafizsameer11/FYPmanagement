@@ -57,25 +57,48 @@ class StudentController extends Controller
     }
     public function edit($id)
     {
-        $student = Student::find($id);
+        $student = Student::with('project','user')->where('id',$id)->first();
         $supervisors = Supervisor::with('user')->get();
         $projects = Project::all();
         return view('student.edit', compact('student', 'supervisors', 'projects'));
     }
     public function update(Request $request, $id)
     {
+        // Find the student by ID
         $student = Student::find($id);
-        $student->department = $request->department;
-        $student->type = $request->type;
-        $student->supervisor_id = $request->supervisor_id;
-        $student->project_id = $request->project_id;
-        $student->stid = $request->stid;
 
-        $student->save();
         if ($student) {
-            return redirect()->route('student.index')->with('success', 'Student Updated Successfully');
+            // Find the associated user
+            $user = User::find($student->user_id);
+
+            if ($user) {
+                // Update user information
+                $user->email = $request->email;
+                if ($request->password) {
+                    $user->password = Hash::make($request->password);
+                }
+                $user->name = $request->name;
+                $user->role = $request->role;
+                $user->save();
+
+                // Update student information
+                $student->department = $request->department;
+                $student->type = $request->type;
+                $student->supervisor_id = $request->supervisor_id;
+                $student->project_id = $request->project_id;
+                $student->stid = $request->stid;
+                $student->save();
+
+                if ($student->wasChanged() || $user->wasChanged()) {
+                    return redirect()->route('student.index')->with('success', 'Student Updated Successfully');
+                } else {
+                    return redirect()->route('student.index')->with('info', 'No changes were made');
+                }
+            } else {
+                return redirect()->route('student.index')->with('error', 'User Not Found');
+            }
         } else {
-            return redirect()->route('student.index')->with('error', 'Student Not Updated');
+            return redirect()->route('student.index')->with('error', 'Student Not Found');
         }
     }
 
@@ -90,7 +113,7 @@ class StudentController extends Controller
     public function supervisorstudent()
 
     {
-        $supervisor=Supervisor::where('user_id',Auth::user()->id)->first();
+        $supervisor = Supervisor::where('user_id', Auth::user()->id)->first();
         $students = Student::where('supervisor_id', $supervisor->id)->with('user', 'project')->latest()->get();
         return view('student.supervisor', compact('students'));
     }

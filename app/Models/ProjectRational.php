@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectRational extends Model
 {
     use HasFactory;
+    public function scope()
+    {
+        return $this->hasMany(ScopeFinalization::class, 'project_id');
+    }
 }

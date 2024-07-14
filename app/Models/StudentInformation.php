@@ -9,4 +9,8 @@ class StudentInformation extends Model
 {
     use HasFactory;
     protected $table = 'student_informations';
+    public function scope()
+    {
+        return $this->hasMany(ScopeFinalization::class, 'stinfoid');
+    }
 }
